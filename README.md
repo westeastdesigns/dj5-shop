@@ -1,0 +1,1 @@
+Ecommerce web application project in progress, created using Python 3.12.3 and Django 5.0.6. 
