@@ -5,6 +5,7 @@
 
 # media for local development testing
 myshop/products/
+myshop/media/products
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
