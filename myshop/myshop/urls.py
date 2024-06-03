@@ -13,4 +13,5 @@ urlpatterns = [
     path("admin/doc/", include("django.contrib.admindocs.urls")),
     # Django admin
     path("admin/", admin.site.urls),
+    path("", include("shop.urls", namespace="shop")),
 ]

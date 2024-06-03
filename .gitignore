@@ -3,6 +3,9 @@
 .DS_Store
 .vscode
 
+# media for local development testing
+myshop/products/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
