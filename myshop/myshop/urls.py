@@ -17,6 +17,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # urls for shopping cart
     path("cart/", include("cart.urls", namespace="cart")),
+    # urls for creating an order
+    path("orders/", include("orders.urls", namespace="orders")),
     # urls for shop app under custom namespace shop
     path("", include("shop.urls", namespace="shop")),
 ]

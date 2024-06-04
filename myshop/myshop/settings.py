@@ -32,8 +32,9 @@ INSTALLED_APPS = [
     # Django admin documentation
     "django.contrib.admindocs",
     # local apps
-    "cart.apps.CartConfig",
-    "shop.apps.ShopConfig",
+    "cart.apps.CartConfig",  # shopping cart
+    "orders.apps.OrdersConfig",  # info about customers and products they are buying
+    "shop.apps.ShopConfig",  # product catalog
 ]
 
 MIDDLEWARE = [
