@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # Django admin documentation
     "django.contrib.admindocs",
     # local apps
+    "cart.apps.CartConfig",
     "shop.apps.ShopConfig",
 ]
 
@@ -123,3 +124,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+# Key to store the cart in the user session
+CART_SESSION_ID = "cart"
