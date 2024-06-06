@@ -12,5 +12,6 @@ def cart(request):
 
     Returns:
         object: cart
+
     """
     return {"cart": Cart(request)}

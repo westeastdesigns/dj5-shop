@@ -8,6 +8,7 @@ class Cart:
     """Manages the shopping cart.
 
     Products can be added to the cart with add() and updated with save()
+
     """
 
     def __init__(self, request):
@@ -35,6 +36,7 @@ class Cart:
 
         Yields:
             item: object in cart being iterated over
+
         """
         product_ids = self.cart.keys()
         # get the product objects and add them to the cart
@@ -52,6 +54,7 @@ class Cart:
 
         Returns:
             int: sum of the quantities of all items in the cart
+
         """
         return sum(item["quantity"] for item in self.cart.values())
 
@@ -68,6 +71,7 @@ class Cart:
             quantity (int, optional): number of Product to add. Defaults to 1.
             override_quantity (bool, optional): whether the new quantity has to be added
                 to the existing quantity. Defaults to False.
+
         """
         product_id = str(product.id)
         if product_id not in self.cart:
@@ -87,6 +91,7 @@ class Cart:
 
         Args:
             product (object): Product to remove from cart
+
         """
         product_id = str(product.id)
         if product_id in self.cart:
@@ -103,6 +108,7 @@ class Cart:
 
         Returns:
             int: the total cost of all of the items in the cart.
+
         """
         return sum(
             Decimal(item["price"]) * item["quantity"] for item in self.cart.values()

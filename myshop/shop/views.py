@@ -15,6 +15,7 @@ def product_list(request, category_slug=None):
 
     Returns:
         HttpResponse: lists the available products filtered by category
+
     """
     category = None
     categories = Category.objects.all()
@@ -39,6 +40,7 @@ def product_detail(request, id, slug):
 
     Returns:
         HttpResponse: displays the details about a single product
+
     """
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     cart_product_form = CartAddProductForm()

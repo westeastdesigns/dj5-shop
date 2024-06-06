@@ -10,6 +10,7 @@ class OrderCreateForm(forms.ModelForm):
 
     Args:
         forms (model): :model:`orders.Order`
+
     """
 
     class Meta:

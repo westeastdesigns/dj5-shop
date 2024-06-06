@@ -15,6 +15,7 @@ class Category(models.Model):
 
     Returns:
         string: name of category
+
     """
 
     name = models.CharField(max_length=200)
@@ -57,6 +58,7 @@ class Product(models.Model):
 
     Returns:
         string: returns the name of the product
+
     """
 
     category = models.ForeignKey(

@@ -12,6 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
         list_display (list): contains values for category names and slugs.
         prepopulated_fields (dictionary): specifies fields where the value is
             automatically set using the value of other fields. Useful for generating slugs.
+
     """
 
     list_display = ["name", "slug"]

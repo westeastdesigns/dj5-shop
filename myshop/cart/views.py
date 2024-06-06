@@ -17,6 +17,7 @@ def cart_add(request, product_id):
 
     Returns:
         HttpResponse: redirects to the cart_detail url to display updated cart contents
+
     """
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -39,6 +40,7 @@ def cart_remove(request, product_id):
 
     Returns:
         HttpResponse: redirects to the updated cart
+
     """
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -54,6 +56,7 @@ def cart_detail(request):
 
     Returns:
         HttpResponse: retrieves the current cart to display it on the detail page
+
     """
     cart = Cart(request)
     for item in cart:

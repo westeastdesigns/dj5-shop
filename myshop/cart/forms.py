@@ -8,6 +8,7 @@ class CartAddProductForm(forms.Form):
 
     Args:
         forms quantity (TypedChoiceField): integer representing the quantity, between 1 and 20.
+
     """
 
     quantity = forms.TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES, coerce=int)

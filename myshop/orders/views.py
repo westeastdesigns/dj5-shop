@@ -20,6 +20,7 @@ def order_create(request):
 
     Returns:
         HttpResponse: displays create.html or created.html depending on request type.
+
     """
     cart = Cart(request)
     if request.method == "POST":
