@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -14,10 +15,12 @@ class Order(models.Model):
         created (DateTimeField): when the order was created
         updated (DateTimeField): when the order was most recently updated
         paid (BooleanField): whether the order has been paid for or not, false by default
+        stripe_id (CharField): unique id of a Stripe payment associated with this order
 
     Returns:
         string: order and id of order
         int: total cost of order
+
     """
 
     first_name = models.CharField(max_length=50)
@@ -30,6 +33,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+    stripe_id = models.CharField(max_length=250, blank=True)
 
     class Meta:
         ordering = ["-created"]
@@ -42,6 +46,24 @@ class Order(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+
+    def get_stripe_url(self):
+        """get_stripe_url returns the Stripe dashboard's url for the payment of this order.
+
+        Returns:
+            string: url of the Stripe dashboard page associated with the payment of this order
+
+        """
+        if not self.stripe_id:
+            # no payment associated
+            return ""
+        if "_test_" in settings.STRIPE_SECRET_KEY:
+            # Stripe path for test payments
+            path = "/test/"
+        else:
+            # Stripe path for real payments
+            path = "/"
+        return f"https://dashboard.stripe.com{path}payments/{self.stripe_id}"
 
 
 class OrderItem(models.Model):
@@ -56,6 +78,7 @@ class OrderItem(models.Model):
     Returns:
         string: product bought
         int: price x quantity
+
     """
 
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)

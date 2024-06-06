@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import views, webhooks
 
 app_name = "payment"
 
@@ -11,4 +11,6 @@ urlpatterns = [
     path("completed/", views.payment_completed, name="completed"),
     # view for Stripe to redirect user if payment is canceled
     path("canceled/", views.payment_canceled, name="canceled"),
+    # url pattern for Stripe webhook
+    path("webhook/", webhooks.stripe_webhook, name="stripe-webhook"),
 ]
