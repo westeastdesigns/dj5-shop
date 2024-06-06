@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     # local apps
     "cart.apps.CartConfig",  # shopping cart
     "orders.apps.OrdersConfig",  # info about customers and products they are buying
+    "payment.apps.PaymentConfig",  # manages payments
     "shop.apps.ShopConfig",  # product catalog
 ]
 
