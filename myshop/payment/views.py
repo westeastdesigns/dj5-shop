@@ -29,13 +29,14 @@ def payment_process(request):
 
     Returns:
         HttpResponse: :template:`payment/process.html` or redirects the user to Stripe.
+
     """
     order_id = request.session.get("order_id")
     order = get_object_or_404(Order, id=order_id)
 
     if request.method == "POST":
-        success_url = request.build_absolute_url(reverse("payment:completed"))
-        cancel_url = request.build_absolute_url(reverse("payment:canceled"))
+        success_url = request.build_absolute_uri(reverse("payment:completed"))
+        cancel_url = request.build_absolute_uri(reverse("payment:canceled"))
         # Stripe checkout session data
         session_data = {
             "mode": "payment",
@@ -77,6 +78,7 @@ def payment_completed(request):
 
     Returns:
         HttpResponse: :template:`payment/completed.html`
+
     """
     return render(request, "payment/completed.html")
 
@@ -91,5 +93,6 @@ def payment_canceled(request):
 
     Returns:
         HttpResponse: :template:`payment/canceled.html`
+
     """
     return render(request, "payment/canceled.html")

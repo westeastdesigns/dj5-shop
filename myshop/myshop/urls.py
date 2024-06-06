@@ -19,6 +19,8 @@ urlpatterns = [
     path("cart/", include("cart.urls", namespace="cart")),
     # urls for creating an order
     path("orders/", include("orders.urls", namespace="orders")),
+    # urls for processing payment of an order
+    path("payment/", include("payment.urls", namespace="payment")),
     # urls for shop app under custom namespace shop
     path("", include("shop.urls", namespace="shop")),
 ]
