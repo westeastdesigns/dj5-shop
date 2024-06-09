@@ -1,8 +1,9 @@
 from cart.cart import Cart
-from django.shortcuts import redirect, render
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import OrderCreateForm
-from .models import OrderItem
+from .models import Order, OrderItem
 from .tasks import order_created
 
 
@@ -42,7 +43,22 @@ def order_create(request):
             request.session["order_id"] = order.id
             # redirect for payment
             return redirect("payment:process")
-            # return render(request, "orders/order/created.html", {"order": order})
     else:
         form = OrderCreateForm()
     return render(request, "orders/order/create.html", {"cart": cart, "form": form})
+
+
+# custom admin view displays info about an order
+@staff_member_required
+def admin_order_detail(request, order_id):
+    """admin_order_detail custom admin view displays info to staff about an order.
+
+    Args:
+        request
+        order_id (int): unique identifier for an order
+
+    Returns:
+        HttpRequest: details about the queried order
+    """
+    order = get_object_or_404(Order, id=order_id)
+    return render(request, "admin/orders/order/detail.html", {"order": order})
