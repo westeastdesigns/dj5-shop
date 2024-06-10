@@ -90,6 +90,23 @@ def order_detail(obj):
     return mark_safe(f'<a href="{url}">View</a>')
 
 
+def order_pdf(obj):
+    """order_pdf adds a link to the PDF file for each result.
+
+    Args:
+        obj (object): Order object
+
+    Returns:
+        string: HTML link for the admin_order_pdf url. mark_safe prevents auto-escape.
+
+    """
+    url = reverse("orders:admin_order_pdf", args=[obj.id])
+    return mark_safe(f'<a href="{url}">PDF</a>')
+
+
+order_pdf.short_description = "Invoice"
+
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     """OrderAdmin registers :model:`orders.Order` model and includes :model:`orders.OrderItem` inline
@@ -115,6 +132,7 @@ class OrderAdmin(admin.ModelAdmin):
         "created",
         "updated",
         order_detail,
+        order_pdf,
     ]
     list_filter = ["paid", "created", "updated"]
     inlines = [OrderItemInline]
