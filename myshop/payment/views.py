@@ -8,7 +8,7 @@ from orders.models import Order
 
 # Views for the payment app
 
-# create the Strip instance
+# create the Stripe instance
 stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe.api_version = settings.STRIPE_API_VERSION
 
