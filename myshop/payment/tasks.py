@@ -32,4 +32,3 @@ def payment_completed(order_id):
     email.attach(f"order_{order.id}.pdf", out.getvalue(), "application/pdf")
     # send email
     email.send()
-    
