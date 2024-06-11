@@ -9,7 +9,7 @@ urlpatterns = [
     path("create/", views.order_create, name="order_create"),
     # view for staff to view details of an order
     path(
-        "admin/order/<int:order_id>",
+        "admin/order/<int:order_id>/",
         views.admin_order_detail,
         name="admin_order_detail",
     ),
