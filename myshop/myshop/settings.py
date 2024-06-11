@@ -140,6 +140,14 @@ CART_SESSION_ID = "cart"
 # email backend for testing in development
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+# email server configuration (gmail)
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+
 
 # Stripe payment keys - test environment
 STRIPE_PUBLISHABLE_KEY = config("STRIPE_PUBLISHABLE_KEY")
