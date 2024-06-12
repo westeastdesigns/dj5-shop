@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "django.contrib.admindocs",
     # local apps
     "cart.apps.CartConfig",  # shopping cart
+    "coupons.apps.CouponsConfig",  # coupon system for shop discounts
     "orders.apps.OrdersConfig",  # info about customers and products they are buying
     "payment.apps.PaymentConfig",  # manages payments
     "shop.apps.ShopConfig",  # product catalog
