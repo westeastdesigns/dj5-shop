@@ -7,7 +7,7 @@ class Coupon(models.Model):
     """:model:`coupons.Coupon` stores data about coupons.
 
     Args:
-        code (CharField): the coupon code users must enter to apply the discount
+        code (CharField): the unique coupon code users must enter to apply the discount
         valid_from (DateTimeField): indicates when the coupon becomes valid
         valid_to (DateTimeField): indicates when the coupon becomes invalid
         discount (IntegerField): discount rate to apply, a percentage between 0 and 100

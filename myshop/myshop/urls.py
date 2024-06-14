@@ -21,6 +21,8 @@ urlpatterns = [
     path("orders/", include("orders.urls", namespace="orders")),
     # urls for processing payment of an order
     path("payment/", include("payment.urls", namespace="payment")),
+    # urls for managing coupons
+    path("coupons/", include("coupons.urls", namespace="coupons")),
     # urls for shop app under custom namespace shop
     path("", include("shop.urls", namespace="shop")),
 ]

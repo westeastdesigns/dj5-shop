@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from coupons.models import Coupon
 from django.conf import settings
 from shop.models import Product
 
@@ -23,6 +24,7 @@ class Cart:
 
         Args:
             request (object): required to initialize cart.
+
         """
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
@@ -30,6 +32,8 @@ class Cart:
             # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
+        # store current applied coupon
+        self.coupon_id = self.session.get("coupon_id")
 
     def __iter__(self):
         """__iter__ iterates over the items in cart and gets products from the database.
@@ -113,3 +117,45 @@ class Cart:
         return sum(
             Decimal(item["price"]) * item["quantity"] for item in self.cart.values()
         )
+
+    @property
+    def coupon(self):
+        """coupon method is defined as a property. If cart contains a coupon_id attribute,
+        the Coupon object with the given ID is returned.
+
+        Returns:
+            object: Coupon object with the given ID
+
+        """
+        if self.coupon_id:
+            try:
+                return Coupon.objects.get(id=self.coupon_id)
+            except Coupon.DoesNotExist:
+                pass
+        return None
+
+    def get_discount(self):
+        """get_discount retrieves discount rate and applies it if cart contains a coupon.
+
+        If the cart contains a coupon, retrieves its discount rate and returns the amount
+        to be deducted from the total amount of the cart.
+
+        Returns:
+            Decimal: amount to be deducted from the total amount of the cart.
+
+        """
+        if self.coupon:
+            return (self.coupon.discount / Decimal(100)) * self.get_total_price()
+        return Decimal(0)
+
+    def get_total_price_after_discount(self):
+        """get_total_price_after_discount deducts amount returned from total amount of cart.
+
+        Returns the total amount of the cart after deducting the amount returned by the
+        :method:`coupons.get_discount` method.
+
+        Returns:
+            int: the total amount of the cart after deducting the discounted amount
+
+        """
+        return self.get_total_price() - self.get_discount()
