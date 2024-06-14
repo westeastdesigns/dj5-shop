@@ -242,6 +242,8 @@ ul.errorlist {
     margin:0;
     padding:0;
     font-size:14px;
+    /* changed this to force lines to stay together */
+    float:inline-start;
 }
 
 .order-info p {
@@ -251,6 +253,8 @@ ul.errorlist {
 
 .order-info span {
     float:right;
+    /* changed this to force lines to stay together */
+    margin-inline-start:100px;
 }
 
 .neg {
