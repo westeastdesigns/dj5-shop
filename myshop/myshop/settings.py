@@ -159,3 +159,8 @@ STRIPE_WEBHOOK_SECRET = config("STRIPE_WEBHOOK_SECRET")
 
 # declaring tasks in celery imports
 CELERY_IMPORTS = ("payment.tasks",)
+
+# Redis settings
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
+REDIS_DB = 1
