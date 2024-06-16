@@ -1,0 +1,236 @@
+# West East Designs Shop
+# Copyright (C) 2024 WestEastDesigns
+# This file is distributed under the same license as the PACKAGE package.
+# WestEastDesigns <info@westeastdesigns.com>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-16 16:47-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+
+#: cart/forms.py:16 cart/templates/cart/detail.html:15
+#: payment/templates/payment/process.html:14
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: cart/templates/cart/detail.html:5 cart/templates/cart/detail.html:9
+msgid "Your shopping cart"
+msgstr "Su carro"
+
+#: cart/templates/cart/detail.html:13 payment/templates/payment/process.html:11
+msgid "Image"
+msgstr "Imagen"
+
+#: cart/templates/cart/detail.html:14 payment/templates/payment/process.html:12
+msgid "Product"
+msgstr "Producto"
+
+#: cart/templates/cart/detail.html:16 cart/templates/cart/detail.html:42
+msgid "Remove"
+msgstr "Eliminar"
+
+#: cart/templates/cart/detail.html:17
+msgid "Unit price"
+msgstr "Precio unitario"
+
+#: cart/templates/cart/detail.html:18 payment/templates/payment/process.html:13
+msgid "Price"
+msgstr "Precio"
+
+#: cart/templates/cart/detail.html:36
+msgid "Update"
+msgstr "Actualizar"
+
+#: cart/templates/cart/detail.html:53 payment/templates/payment/process.html:33
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#: cart/templates/cart/detail.html:59
+#, python-format
+msgid ""
+"\n"
+"              \"%(code)s\" coupon (%(discount)s%% off)\n"
+"            "
+msgstr ""
+"\n"
+"              Cupón \"%(code)s\" (%(discount)s%% descuento)\n"
+"            "
+
+#: cart/templates/cart/detail.html:70 payment/templates/payment/process.html:15
+#: payment/templates/payment/process.html:52
+msgid "Total"
+msgstr "Total"
+
+#: cart/templates/cart/detail.html:81
+#: shop/templates/shop/product/detail.html:28
+msgid "People who bought this also bought"
+msgstr "Personas que compraron esto también compraron"
+
+#: cart/templates/cart/detail.html:94
+msgid "Apply a coupon"
+msgstr "Aplicar cupón"
+
+#: cart/templates/cart/detail.html:97
+msgid "Apply"
+msgstr "Aplicar"
+
+#: cart/templates/cart/detail.html:101
+msgid "Continue shopping"
+msgstr "Continuar comprando"
+
+#: cart/templates/cart/detail.html:102
+msgid "Checkout"
+msgstr "Comprar"
+
+#: coupons/forms.py:12
+msgid "Coupon"
+msgstr "Cupón"
+
+#: myshop/settings.py:118
+msgid "English"
+msgstr "Inglés"
+
+#: myshop/settings.py:119
+msgid "Spanish"
+msgstr "Español"
+
+#: payment/templates/payment/canceled.html:4
+msgid "Payment canceled"
+msgstr "Pago cancelado"
+
+#: payment/templates/payment/canceled.html:7
+msgid "Your payment has not been processed"
+msgstr "Su pago no ha sido procesado"
+
+#: payment/templates/payment/canceled.html:8
+msgid "There was a problem processing your payment."
+msgstr "Ha habido un problema con el procesamiento del pago."
+
+#: payment/templates/payment/completed.html:4
+msgid "Payment successful"
+msgstr "Pago realizado"
+
+#: payment/templates/payment/completed.html:7
+msgid "Your payment was successful"
+msgstr "Su pago ha sido realizado"
+
+#: payment/templates/payment/completed.html:8
+msgid "Your payment has been processed successfully."
+msgstr "Su pago se ha procesado correctamente."
+
+#: payment/templates/payment/process.html:4
+msgid "Pay your order"
+msgstr "Pague su compra"
+
+#: payment/templates/payment/process.html:7
+msgid "Order summary"
+msgstr "Resumen de compra"
+
+#: payment/templates/payment/process.html:41
+#, python-format
+msgid ""
+"\n"
+"              \"%(code)s\" (%(discount)s%% off)\n"
+"            "
+msgstr ""
+"\n"
+"              \"%(code)s\" (%(discount)s%% descuento)\n"
+"            "
+
+#: payment/templates/payment/process.html:61
+msgid "Pay now"
+msgstr "Pagar ahora"
+
+#: shop/templates/shop/base.html:7 shop/templates/shop/base.html:12
+msgid "West.East.Designs Shop"
+msgstr ""
+
+#: shop/templates/shop/base.html:18
+msgid "Your cart"
+msgstr "Su carro"
+
+#: shop/templates/shop/base.html:20
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                %(items)s item, $%(total)s\n"
+#| "              "
+#| msgid_plural ""
+#| "\n"
+#| "                %(items)s items, $%(total)s\n"
+#| "              "
+msgid ""
+"\n"
+"                                %(items)s item, $%(total)s\n"
+"                            "
+msgid_plural ""
+"\n"
+"                                %(items)s items, $%(total)s\n"
+"                            "
+msgstr[0] ""
+"\n"
+"                %(items)s producto, $%(total)s\n"
+"              "
+msgstr[1] ""
+"\n"
+"                %(items)s productos, $%(total)s\n"
+"              "
+
+#: shop/templates/shop/base.html:27
+msgid "Your cart is empty."
+msgstr "Su carro está vacío."
+
+#: shop/templates/shop/product/detail.html:22
+msgid "Add to cart"
+msgstr "Añadir al carro"
+
+#: shop/templates/shop/product/list.html:5
+#: shop/templates/shop/product/list.html:23
+msgid "Products"
+msgstr "Productos"
+
+#: shop/templates/shop/product/list.html:10
+msgid "Categories"
+msgstr "Categorías"
+
+#: shop/templates/shop/product/list.html:13
+msgid "All"
+msgstr "Todos"
+
+#~ msgid "cart/"
+#~ msgstr "carro/"
+
+#~ msgid "orders/"
+#~ msgstr "pedidos/"
+
+#~ msgid "payment/"
+#~ msgstr "pago/"
+
+#~ msgid "coupons/"
+#~ msgstr "cupon/"
+
+#~ msgid "process/"
+#~ msgstr "procesar/"
+
+#~ msgid "completed/"
+#~ msgstr "completado/"
+
+#~ msgid "canceled/"
+#~ msgstr "cancelado/"
+
+#~ msgid "My shop"
+#~ msgstr "Mi tienda"
+
+#~ msgid "Language"
+#~ msgstr "Idioma"
