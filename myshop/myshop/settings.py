@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Django admin documentation
     "django.contrib.admindocs",
+    # third-party apps
+    "rosetta",  # edit translations in browser
     # local apps
     "cart.apps.CartConfig",  # shopping cart
     "coupons.apps.CouponsConfig",  # coupon system for shop discounts

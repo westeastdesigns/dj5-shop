@@ -13,6 +13,7 @@ click-repl==0.3.0
 colorama==0.4.6
 cssselect2==0.7.0
 Django==5.0.6
+django-rosetta==0.10.0
 docutils==0.21.2
 flower==2.0.1
 fonttools==4.53.0
@@ -21,6 +22,7 @@ humanize==4.9.0
 idna==3.7
 kombu==5.3.7
 pillow==10.3.0
+polib==1.2.0
 prometheus_client==0.20.0
 prompt_toolkit==3.0.46
 pycparser==2.22
