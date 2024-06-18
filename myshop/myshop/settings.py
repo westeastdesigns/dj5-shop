@@ -35,13 +35,14 @@ INSTALLED_APPS = [
     # Django admin documentation
     "django.contrib.admindocs",
     # third-party apps
+    "parler",  # django-parler facilitates model translations
     "rosetta",  # edit translations in browser
     # local apps
+    "shop.apps.ShopConfig",  # product catalog
     "cart.apps.CartConfig",  # shopping cart
-    "coupons.apps.CouponsConfig",  # coupon system for shop discounts
     "orders.apps.OrdersConfig",  # info about customers and products they are buying
     "payment.apps.PaymentConfig",  # manages payments
-    "shop.apps.ShopConfig",  # product catalog
+    "coupons.apps.CouponsConfig",  # coupon system for shop discounts
 ]
 
 MIDDLEWARE = [
@@ -180,3 +181,16 @@ CELERY_IMPORTS = ("payment.tasks",)
 REDIS_HOST = "localhost"
 REDIS_PORT = 6379
 REDIS_DB = 1
+
+
+# django-parler settings
+PARLER_LANGUAGES = {
+    None: (
+        {"code": "en"},
+        {"code": "es"},
+    ),
+    "default": {
+        "fallback": "en",
+        "hide_untranslated": False,
+    },
+}

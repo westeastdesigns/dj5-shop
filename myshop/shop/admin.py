@@ -1,11 +1,12 @@
 from django.contrib import admin
+from parler.admin import TranslatableAdmin
 
 from .models import Category, Product
 
 
 # Registers catalog models on the administration site
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TranslatableAdmin):
     """CategoryAdmin registers the Category model on the administation site.
 
     Args:
@@ -16,11 +17,13 @@ class CategoryAdmin(admin.ModelAdmin):
     """
 
     list_display = ["name", "slug"]
-    prepopulated_fields = {"slug": ("name",)}
+
+    def get_prepopulated_fields(self, request, obj=None):
+        return {"slug": ("name",)}
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TranslatableAdmin):
     """ProductAdmin registers the Product model on the administration site.
 
     Args:
@@ -38,4 +41,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ["name", "slug", "price", "available", "created", "updated"]
     list_filter = ["available", "created", "updated"]
     list_editable = ["price", "available"]
-    prepopulated_fields = {"slug": ("name",)}
+
+    def get_prepopulated_fields(self, request, obj=None):
+        return {"slug": ("name",)}
