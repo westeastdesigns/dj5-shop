@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # Django admin documentation
     "django.contrib.admindocs",
     # third-party apps
+    "localflavor",  # django-localflavor validates form fields, localization
     "parler",  # django-parler facilitates model translations
     "rosetta",  # edit translations in browser
     # local apps
