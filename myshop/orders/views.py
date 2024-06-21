@@ -53,10 +53,13 @@ def order_create(request):
             return redirect("payment:process")
     else:
         form = OrderCreateForm()
+
+    # include coupon code information in the context as code
+    code = cart.coupon.code if cart.coupon else None
     return render(
         request,
         "orders/order/create.html",
-        {"cart": cart, "form": form},
+        {"cart": cart, "form": form, "code": code},
     )
 
 
