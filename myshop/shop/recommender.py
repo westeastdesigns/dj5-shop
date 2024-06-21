@@ -76,7 +76,7 @@ class Recommender:
         the members of the sorted set.
 
         Args:
-            products (list): list of Product objects to get receommendations for. It can
+            products (list): list of Product objects to get recommendations for. It can
                 contain one or more products.
             max_results (int, optional): Represents the maximum number of recommendations
                 to return. Defaults to 6.

@@ -65,7 +65,7 @@ class Order(models.Model):
 
         For each item in the order, this method computes the weight of each product by
         multiplying its weight by how many of that product is being ordered. After all
-        items in the order have weights calculated, all of the weights are added together
+        items in the order have weights calculated, all the weights are added together
         and that sum is returned as an integer. Weights are stored in grams as a
         PositiveIntegerField in the :model:`shop.Product` model.
 

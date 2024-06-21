@@ -57,7 +57,8 @@ class OrderItemInline(admin.TabularInline):
     and raw_id_fields (list)
 
     Args:
-        admin (TabularInline)
+        model: (:model:`orders.OrderItem`)
+        raw_id_fields: (list)
 
     """
 
@@ -112,9 +113,6 @@ class OrderAdmin(admin.ModelAdmin):
     """OrderAdmin registers :model:`orders.Order` model and includes :model:`orders.OrderItem` inline
 
     The fields are list_display (list), list_filter (list), and inlines (:class:`orders.OrderItemInline`)
-
-    Args:
-        admin (ModelAdmin)
 
     """
 

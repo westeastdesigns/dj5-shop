@@ -54,7 +54,7 @@ class Cart:
             yield item
 
     def __len__(self):
-        """__len__ counts all of the items in the cart.
+        """__len__ counts all the items in the cart.
 
         Returns:
             int: sum of the quantities of all items in the cart
@@ -111,7 +111,7 @@ class Cart:
         """get_total_price calculates the total cost of the items in the cart.
 
         Returns:
-            int: the total cost of all of the items in the cart.
+            int: the total cost of all the items in the cart.
 
         """
         return sum(
