@@ -55,6 +55,7 @@ class Product(TranslatableModel):
         description (TextField): product details are optional, but encouraged
         price (DecimalField): decimal.Decimal type stores a fixed-precision decimal number
             with 10 digits at max and two decimal places
+        weight (PositiveIntegerField): default value is 0. Product weight is in grams.
         available (BooleanField): indicates whether the product is available
         created (DateTimeField): stores when the object was created
         updated (DateTimeField): stores when the object was last updated
@@ -74,6 +75,7 @@ class Product(TranslatableModel):
     )
     image = models.ImageField(upload_to="products/%Y/%m/%d", blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    weight = models.PositiveIntegerField(default=0)  # weight in grams
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

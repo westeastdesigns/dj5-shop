@@ -19,7 +19,7 @@ def payment_process(request):
     payment_process creates a Stripe Checkout Session and redirects the client to the
     Stripe-hosted payment form. A checkout session is a programmatic representation of
     what the client sees when they are redirected to the payment form, including the
-    products, quantities, currency, and amount to charge.
+    products, quantities, currency, shipping cost, and amount to charge.
 
     Args:
         request (GET): asks for :template:`payment/process.html`
@@ -46,6 +46,7 @@ def payment_process(request):
             "cancel_url": cancel_url,
             "line_items": [],
         }
+
         # add order items to the Stripe checkout session
         for item in order.items.all():
             session_data["line_items"].append(
@@ -61,6 +62,22 @@ def payment_process(request):
                 }
             )
 
+        # Add shipping cost to the Stripe checkout session
+        shipping_cost = order.get_shipping_cost()
+        if shipping_cost:
+            session_data["line_items"].append(
+                {
+                    "price_data": {
+                        "unit_amount": int(shipping_cost * Decimal("100")),
+                        "currency": "usd",
+                        "product_data": {
+                            "name": "Shipping",
+                        },
+                    },
+                    "quantity": 1,
+                }
+            )
+
         # Stripe coupon
         if order.coupon:
             stripe_coupon = stripe.Coupon.create(
@@ -69,8 +86,10 @@ def payment_process(request):
                 duration="once",
             )
             session_data["discounts"] = [{"coupon": stripe_coupon.id}]
+
         # create Stripe checkout session
         session = stripe.checkout.Session.create(**session_data)
+
         # redirect to Stripe payment form
         return redirect(session.url, code=303)
 

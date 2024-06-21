@@ -53,7 +53,11 @@ def order_create(request):
             return redirect("payment:process")
     else:
         form = OrderCreateForm()
-    return render(request, "orders/order/create.html", {"cart": cart, "form": form})
+    return render(
+        request,
+        "orders/order/create.html",
+        {"cart": cart, "form": form},
+    )
 
 
 @staff_member_required

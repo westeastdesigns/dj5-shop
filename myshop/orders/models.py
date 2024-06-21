@@ -60,6 +60,46 @@ class Order(models.Model):
     def __str__(self):
         return f"Order {self.id}"
 
+    def get_total_weight(self):
+        """get_total_weight finds the total weight of all products in the order.
+
+        For each item in the order, this method computes the weight of each product by
+        multiplying its weight by how many of that product is being ordered. After all
+        items in the order have weights calculated, all of the weights are added together
+        and that sum is returned as an integer. Weights are stored in grams as a
+        PositiveIntegerField in the :model:`shop.Product` model.
+
+        Returns:
+            integer: weight of all items in the order, calculated in grams
+
+        """
+        return sum(item.get_weight() for item in self.items.all())
+
+    def get_shipping_cost(self):
+        """get_shipping_cost finds the cost of shipping for an order. Three fee tiers.
+
+        Assigns the sum found by the get_total_weight method to the variable total_weight.
+        Returns 0.00 if total_weight is zero (indicating there are no physical products),
+        otherwise calculates shipping cost based on weight tiers.
+        The three weight tiers are calculated by weight as follows:
+            (A) if the value is less than or equal to 500 grams, 5.00 is returned.
+            (B) Else if the value is less than or equal to 2000 grams, 10.00 is returned.
+            (C) Otherwise, assume the value is greater than 2000 grams and 20.00 is returned.
+
+        Returns:
+            decimal: Shipping cost based on the total weight of the order.
+
+        """
+        total_weight = self.get_total_weight()
+        if total_weight == 0:
+            return Decimal("0.00")
+        elif total_weight <= 500:
+            return Decimal("5.00")
+        elif total_weight <= 2000:
+            return Decimal("10.00")
+        else:
+            return Decimal("20.00")
+
     def get_total_cost_before_discount(self):
         return sum(item.get_cost() for item in self.items.all())
 
@@ -70,8 +110,17 @@ class Order(models.Model):
         return Decimal(0)
 
     def get_total_cost(self):
+        """get_total_cost gets the total cost of order, including discount and shipping.
+
+        The total cost before the discount is found, then the amount of any discounts
+        are removed from the total cost. Then the shipping cost is found and removed.
+
+        Returns:
+            integer: This returns the total cost of the order as an integer with 2 decimals.
+
+        """
         total_cost = self.get_total_cost_before_discount()
-        return total_cost - self.get_discount()
+        return total_cost - self.get_discount() + self.get_shipping_cost()
 
     def get_stripe_url(self):
         """get_stripe_url returns the Stripe dashboard's url for the payment of this order.
@@ -120,3 +169,7 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+
+    def get_weight(self):
+        """Calculate the total weight of this item."""
+        return self.product.weight * self.quantity
