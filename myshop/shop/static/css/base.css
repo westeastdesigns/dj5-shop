@@ -242,8 +242,9 @@ ul.errorlist {
     margin:0;
     padding:0;
     font-size:14px;
-    /* changed this to force lines to stay together */
+    /* changed this to force lines to stay together - but inline-start is "mismatched property value"?
     float:inline-start;
+    */
 }
 
 .order-info p {
@@ -253,6 +254,13 @@ ul.errorlist {
 
 .order-info span {
     float:right;
+    /* changed this to force lines to stay together */
+    margin-inline-start:100px;
+}
+
+/* added to keep the coupon line in the subtotal from breaking up */
+.coupon-details span {
+    float:left;
     /* changed this to force lines to stay together */
     margin-inline-start:100px;
 }
@@ -322,7 +330,7 @@ ul.errorlist {
 /* braintree hosted fields */
 form div.field {
     font-size:13px;
-    color:#666;
+    /* color:#666;*/
     width:300px;
     height:22px;
     margin-bottom:10px;

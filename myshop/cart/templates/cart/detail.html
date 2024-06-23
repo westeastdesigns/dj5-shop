@@ -57,12 +57,12 @@
         <tr>
           <td>
             {% blocktranslate with code=cart.coupon.code discount=cart.coupon.discount %}
-              "{{ code }}" coupon ({{ discount }}% off)
+            <span class="coupon-details">"{{ code }}" coupon ({{ discount }}% off)</span>
             {% endblocktranslate %}
           </td>
           <td colspan="4"></td>
           <td class="num neg">
-            - ${{ cart.get_discount|floatformat:2 }}
+          - ${{ cart.get_discount|floatformat:2 }}
           </td>
         </tr>
       {% endif %}

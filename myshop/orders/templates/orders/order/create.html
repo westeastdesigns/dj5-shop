@@ -19,7 +19,7 @@
             {% if cart.coupon %}
                 <li>
                     {% blocktranslate with code=cart.coupon.code discount=cart.coupon.discount %}
-                        "{{ code }}" ({{ discount }}% off)
+                    <span class="coupon-details">"{{ code }}" ({{ discount }}% off)</span>
                     {% endblocktranslate %}
                     <span class="neg">- ${{ cart.get_discount|floatformat:2 }}</span>
                 </li>
@@ -29,7 +29,7 @@
     </div>
     <form class="order-form" method="post">
         {{ form.as_p }}
-        <p><input type="submit" value="{% translate "Place order" %}"></p>
+        <p><input type="submit" value="{% translate 'Place order' %}"></p>
         {% csrf_token %}
     </form>
 {% endblock %}
