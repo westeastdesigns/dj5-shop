@@ -34,6 +34,8 @@ class Cart:
         self.cart = cart
         # store current applied coupon
         self.coupon_id = self.session.get("coupon_id")
+        # store shipping cost
+        self.shipping_cost = self.session.get("shipping_cost", Decimal("0.00"))
 
     def __iter__(self):
         """__iter__ iterates over the items in cart and gets products from the database.
@@ -158,4 +160,22 @@ class Cart:
             int: the total amount of the cart after deducting the discounted amount
 
         """
-        return self.get_total_price() - self.get_discount()
+        return self.get_total_price() - self.get_discount() + self.get_shipping_cost()
+
+    def set_shipping_cost(self, shipping_cost):
+        """Set the shipping cost for the cart.
+
+        Args:
+            shipping_cost (Decimal): The shipping cost to be set.
+        """
+        self.shipping_cost = Decimal(shipping_cost)
+        self.session["shipping_cost"] = str(self.shipping_cost)
+        self.save()
+
+    def get_shipping_cost(self):
+        """Get the shipping cost for the cart.
+
+        Returns:
+            Decimal: The shipping cost.
+        """
+        return Decimal(self.shipping_cost)

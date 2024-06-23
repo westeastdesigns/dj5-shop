@@ -149,6 +149,7 @@ class OrderItem(models.Model):
         product (ForeignKey): references Product table
         price (DecimalField): price paid for item bought
         quantity (PositiveIntegerField): quantity of item bought
+        weight (PositiveIntegerField): weight in grams of item bought
 
     Returns:
         string: product bought

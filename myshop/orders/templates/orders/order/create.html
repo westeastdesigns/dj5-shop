@@ -7,6 +7,7 @@
 
 {% block content %}
     <h1>{% translate "Checkout" %}</h1>
+    {% comment %} Order info {% endcomment %}
     <div class="order-info">
         <h3>{% translate "Your order" %}</h3>
         <ul>
@@ -16,6 +17,7 @@
                   <span>${{ item.total_price|floatformat:2 }}</span>
                 </li>
             {% endfor %}
+            {% comment %} Coupon info {% endcomment %}
             {% if cart.coupon %}
                 <li>
                     {% blocktranslate with code=cart.coupon.code discount=cart.coupon.discount %}
@@ -24,12 +26,21 @@
                     <span class="neg">- ${{ cart.get_discount|floatformat:2 }}</span>
                 </li>
             {% endif %}
+            {% comment %} Shipping info {% endcomment %}
+            {% if cart.get_shipping_cost > 0 %}
+            <li>
+                {% translate "Shipping" %} 
+                <span>${{ cart.get_shipping_cost|floatformat:2 }}</span>
+            </li>
+            {% endif %}
         </ul>
+        {% comment %} Total {% endcomment %}
         <p>{% translate "Total" %}: ${{ cart.get_total_price_after_discount|floatformat:2 }}</p>
     </div>
-    <form class="order-form" method="post">
+    <form action="{% url "orders:order_create" %}" method="post" class="order-form">
         {{ form.as_p }}
         <p><input type="submit" value="{% translate 'Place order' %}"></p>
         {% csrf_token %}
+        <button type="submit" class="button">{% translate "Place order" %}</button>
     </form>
 {% endblock %}
