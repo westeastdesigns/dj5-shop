@@ -125,6 +125,7 @@ class OrderAdmin(admin.ModelAdmin):
         "postal_code",
         "city",
         "state",
+        "get_shipping_cost",
         "paid",
         order_payment,
         "created",
@@ -135,3 +136,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ["paid", "created", "updated"]
     inlines = [OrderItemInline]
     actions = [export_to_csv]
+
+    def get_shipping_cost(self, obj):
+        return obj.get_shipping_cost()
+
+    get_shipping_cost.short_description = "Shipping Cost"

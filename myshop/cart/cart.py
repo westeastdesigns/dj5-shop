@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from coupons.models import Coupon
 from django.conf import settings
+from orders.models import Order
 from shop.models import Product
 
 
@@ -34,8 +35,7 @@ class Cart:
         self.cart = cart
         # store current applied coupon
         self.coupon_id = self.session.get("coupon_id")
-        # store shipping cost
-        self.shipping_cost = self.session.get("shipping_cost", Decimal("0.00"))
+        # Not storing shipping cost here
 
     def __iter__(self):
         """__iter__ iterates over the items in cart and gets products from the database.
@@ -168,8 +168,8 @@ class Cart:
         Args:
             shipping_cost (Decimal): The shipping cost to be set.
         """
-        self.shipping_cost = Decimal(shipping_cost)
-        self.session["shipping_cost"] = str(self.shipping_cost)
+        # Save shipping cost in session
+        self.session["shipping_cost"] = str(Decimal(shipping_cost))
         self.save()
 
     def get_shipping_cost(self):
@@ -178,4 +178,8 @@ class Cart:
         Returns:
             Decimal: The shipping cost.
         """
-        return Decimal(self.shipping_cost)
+        # Calculate shipping cost dynamically using Order's get_shipping_cost() method
+        order = Order.objects.first()  # Adjust this to fetch the correct order
+        if order:
+            return order.get_shipping_cost()
+        return Decimal("0.00")
