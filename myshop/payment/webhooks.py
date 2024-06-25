@@ -1,3 +1,5 @@
+import logging
+
 import stripe
 from django.conf import settings
 from django.http import HttpResponse
@@ -7,6 +9,8 @@ from shop.models import Product
 from shop.recommender import Recommender
 
 from .tasks import payment_completed
+
+logger = logging.getLogger(__name__)
 
 
 @csrf_exempt
@@ -40,12 +44,17 @@ def stripe_webhook(request):
         # Invalid signature
         return HttpResponse(status=400)
 
+    logger.info(f"Received event: {event}")
+
     if event.type == "checkout.session.completed":
         session = event.data.object
+        logger.info(f"Session data: {session}")
         if session.mode == "payment" and session.payment_status == "paid":
             try:
                 order = Order.objects.get(id=session.client_reference_id)
+                logger.info(f"Order found: {order}")
             except Order.DoesNotExist:
+                logger.error("Order does not exist")
                 return HttpResponse(status=404)
             # mark order as paid
             order.paid = True
@@ -61,5 +70,6 @@ def stripe_webhook(request):
 
             # launch asynchronous task
             payment_completed.delay(order.id)
+            logger.info("Launched payment_completed task")
 
     return HttpResponse(status=200)
