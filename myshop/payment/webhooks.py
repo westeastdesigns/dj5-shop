@@ -1,4 +1,5 @@
 import logging
+from typing import Any, Dict
 
 import stripe
 from django.conf import settings
@@ -39,31 +40,35 @@ def stripe_webhook(request):
         )
     except ValueError:
         # Invalid payload
+        logger.error("Invalid payload")
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError:
         # Invalid signature
+        logger.error("Invalid signature")
         return HttpResponse(status=400)
 
     logger.info(f"Received event: {event}")
 
-    if event.type == "checkout.session.completed":
-        session = event.data.object
+    if event["type"] == "checkout.session.completed":
+        session: Dict[str, Any] = event["data"]["object"]
         logger.info(f"Session data: {session}")
-        if session.mode == "payment" and session.payment_status == "paid":
+
+        if session.get("mode") == "payment" and session.get("payment_status") == "paid":
             try:
-                order = Order.objects.get(id=session.client_reference_id)
+                order = Order.objects.get(id=session.get("client_reference_id"))
                 logger.info(f"Order found: {order}")
             except Order.DoesNotExist:
                 logger.error("Order does not exist")
                 return HttpResponse(status=404)
+
             # mark order as paid
             order.paid = True
             # store Stripe payment ID
-            order.stripe_id = session.payment_intent
+            order.stripe_id = session.get("payment_intent")
             order.save()
 
             # save items bought for product recommendations
-            product_ids = order.items.values_list("product_id")
+            product_ids = order.items.values_list("product_id", flat=True)
             products = Product.objects.filter(id__in=product_ids)
             r = Recommender()
             r.products_bought(products)
