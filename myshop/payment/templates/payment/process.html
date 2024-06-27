@@ -21,7 +21,8 @@
         <tr class="row{% cycle "1" "2" %}">
           <td>
             <img src="{% if item.product.image %}{{ item.product.image.url }}
-            {% else %}{% static "img/no_image.png" %}{% endif %}">
+            {% else %}{% static "img/no_image.png" %}
+            {% endif %}" alt="this product has no image">
           </td>
           <td>{{ item.product.name }}</td>
           <td class="num">${{ item.price }}</td>
