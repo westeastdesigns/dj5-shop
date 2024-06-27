@@ -65,7 +65,6 @@ class Product(TranslatableModel):
 
     """
 
-    id = id
     translations = TranslatedFields(
         name=models.CharField(max_length=200),
         slug=models.SlugField(max_length=200),

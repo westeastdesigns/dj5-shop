@@ -28,7 +28,6 @@ class Order(models.Model):
 
     """
 
-    id = id
     first_name = models.CharField(_("first name"), max_length=50)
     last_name = models.CharField(_("last name"), max_length=50)
     email = models.EmailField(_("e-mail"))
@@ -157,7 +156,6 @@ class OrderItem(models.Model):
 
     """
 
-    id = id
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
     product = models.ForeignKey(
         "shop.Product", related_name="order_items", on_delete=models.CASCADE
