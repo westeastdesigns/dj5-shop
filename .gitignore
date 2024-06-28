@@ -2,6 +2,7 @@
 .notes/
 .DS_Store
 .vscode
+qodana.yaml
 
 # media for local development testing
 myshop/products/
