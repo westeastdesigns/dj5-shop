@@ -32,6 +32,14 @@ class Category(TranslatableModel):
         verbose_name = "category"
         verbose_name_plural = "categories"
 
+    @property
+    def name(self) -> str:
+        return self.safe_translation_getter("name", any_language=True) or ""
+
+    @property
+    def slug(self) -> str:
+        return self.safe_translation_getter("slug", any_language=True) or ""
+
     def __str__(self):
         return self.name
 
@@ -65,6 +73,8 @@ class Product(TranslatableModel):
 
     """
 
+    # id = models.AutoField(primary_key=True)  # Explicitly declare the id field
+
     translations = TranslatedFields(
         name=models.CharField(max_length=200),
         slug=models.SlugField(max_length=200),
@@ -88,8 +98,16 @@ class Product(TranslatableModel):
             models.Index(fields=["-created"]),
         ]
 
+    @property
+    def name(self) -> str:
+        return self.safe_translation_getter("name", any_language=True) or ""
+
+    @property
+    def slug(self) -> str:
+        return self.safe_translation_getter("slug", any_language=True) or ""
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("shop:product_detail", args=[self.id, self.slug])
+        return reverse("shop:product_detail", args=[self.id, self.slug])  # type: ignore
