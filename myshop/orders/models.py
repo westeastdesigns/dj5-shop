@@ -28,7 +28,6 @@ class Order(models.Model):
 
     """
 
-    id = id
     first_name = models.CharField(_("first name"), max_length=50)
     last_name = models.CharField(_("last name"), max_length=50)
     email = models.EmailField(_("e-mail"))
@@ -57,15 +56,15 @@ class Order(models.Model):
             models.Index(fields=["-created"]),
         ]
 
-    def __str__(self):
-        return f"Order {self.id}"
+    def __str__(self) -> str:
+        return f"Order {self.id}"  # type: ignore
 
-    def get_total_weight(self):
+    def get_total_weight(self) -> int:
         """get_total_weight finds the total weight of all products in the order.
 
         For each item in the order, this method computes the weight of each product by
         multiplying its weight by how many of that product is being ordered. After all
-        items in the order have weights calculated, all of the weights are added together
+        items in the order have weights calculated, all the weights are added together
         and that sum is returned as an integer. Weights are stored in grams as a
         PositiveIntegerField in the :model:`shop.Product` model.
 
@@ -73,9 +72,9 @@ class Order(models.Model):
             integer: weight of all items in the order, calculated in grams
 
         """
-        return sum(item.get_weight() for item in self.items.all())
+        return sum(item.get_weight() for item in self.items.all())  # type: ignore
 
-    def get_shipping_cost(self):
+    def get_shipping_cost(self) -> Decimal:
         """get_shipping_cost finds the cost of shipping for an order. Three fee tiers.
 
         Assigns the sum found by the get_total_weight method to the variable total_weight.
@@ -100,16 +99,16 @@ class Order(models.Model):
         else:
             return Decimal("20.00")
 
-    def get_total_cost_before_discount(self):
-        return sum(item.get_cost() for item in self.items.all())
+    def get_total_cost_before_discount(self) -> Decimal:
+        return sum(item.get_cost() for item in self.items.all())  # type: ignore
 
-    def get_discount(self):
+    def get_discount(self) -> Decimal:
         total_cost = self.get_total_cost_before_discount()
         if self.discount:
-            return total_cost * (self.discount / Decimal(100))
+            return total_cost * (Decimal(self.discount) / Decimal(100))
         return Decimal(0)
 
-    def get_total_cost(self):
+    def get_total_cost(self) -> Decimal:
         """get_total_cost gets the total cost of order, including discount and shipping.
 
         The total cost before the discount is found, then the amount of any discounts
@@ -122,7 +121,7 @@ class Order(models.Model):
         total_cost = self.get_total_cost_before_discount()
         return total_cost - self.get_discount() + self.get_shipping_cost()
 
-    def get_stripe_url(self):
+    def get_stripe_url(self) -> str:
         """get_stripe_url returns the Stripe dashboard's url for the payment of this order.
 
         Returns:
@@ -149,6 +148,7 @@ class OrderItem(models.Model):
         product (ForeignKey): references Product table
         price (DecimalField): price paid for item bought
         quantity (PositiveIntegerField): quantity of item bought
+        weight (PositiveIntegerField): weight in grams of item bought
 
     Returns:
         string: product bought
@@ -156,7 +156,6 @@ class OrderItem(models.Model):
 
     """
 
-    id = id
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
     product = models.ForeignKey(
         "shop.Product", related_name="order_items", on_delete=models.CASCADE
@@ -164,12 +163,12 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
 
-    def __str__(self):
-        return str(self.id)
+    def __str__(self) -> str:
+        return str(self.id)  # type: ignore
 
-    def get_cost(self):
-        return self.price * self.quantity
+    def get_cost(self) -> Decimal:
+        return self.price * Decimal(self.quantity)
 
-    def get_weight(self):
+    def get_weight(self) -> int:
         """Calculate the total weight of this item."""
         return self.product.weight * self.quantity

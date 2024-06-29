@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from coupons.models import Coupon
 from django.conf import settings
+from orders.models import Order
 from shop.models import Product
 
 
@@ -34,6 +35,7 @@ class Cart:
         self.cart = cart
         # store current applied coupon
         self.coupon_id = self.session.get("coupon_id")
+        # Not storing shipping cost here
 
     def __iter__(self):
         """__iter__ iterates over the items in cart and gets products from the database.
@@ -54,7 +56,7 @@ class Cart:
             yield item
 
     def __len__(self):
-        """__len__ counts all of the items in the cart.
+        """__len__ counts all the items in the cart.
 
         Returns:
             int: sum of the quantities of all items in the cart
@@ -111,7 +113,7 @@ class Cart:
         """get_total_price calculates the total cost of the items in the cart.
 
         Returns:
-            int: the total cost of all of the items in the cart.
+            int: the total cost of all the items in the cart.
 
         """
         return sum(
@@ -158,4 +160,26 @@ class Cart:
             int: the total amount of the cart after deducting the discounted amount
 
         """
-        return self.get_total_price() - self.get_discount()
+        return self.get_total_price() - self.get_discount() + self.get_shipping_cost()
+
+    def set_shipping_cost(self, shipping_cost):
+        """Set the shipping cost for the cart.
+
+        Args:
+            shipping_cost (Decimal): The shipping cost to be set.
+        """
+        # Save shipping cost in session
+        self.session["shipping_cost"] = str(Decimal(shipping_cost))
+        self.save()
+
+    def get_shipping_cost(self):
+        """Get the shipping cost for the cart.
+
+        Returns:
+            Decimal: The shipping cost.
+        """
+        # Calculate shipping cost dynamically using Order's get_shipping_cost() method
+        order = Order.objects.first()  # Adjust this to fetch the correct order
+        if order:
+            return order.get_shipping_cost()
+        return Decimal("0.00")

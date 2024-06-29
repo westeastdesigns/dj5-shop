@@ -8,10 +8,10 @@ class OrderCreateForm(forms.ModelForm):
     """OrderCreateForm is a form to enter the details of an order.
 
     This connects to the :view:`cart.order_create` view. postal_code requires a valid US
-    zip code to create a new order.
+    zip code to create a new order. References :model:`orders.Order`
 
     Args:
-        forms (model): :model:`orders.Order`
+        postal_code (USZipCodeField): a valid zip code is required
 
     """
 

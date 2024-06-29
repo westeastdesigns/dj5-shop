@@ -5,6 +5,7 @@
   {% translate "Your shopping cart" %}
 {% endblock %}
 
+{% comment %} Cart inventory {% endcomment %}
 {% block content %}
   <h1>{% translate "Your shopping cart" %}</h1>
   <table class="cart">
@@ -48,6 +49,7 @@
           </tr>
         {% endwith %}
       {% endfor %}
+      {% comment %} Coupon info {% endcomment %}
       {% if cart.coupon %}
         <tr class="subtotal">
           <td>{% translate "Subtotal" %}</td>
@@ -57,15 +59,24 @@
         <tr>
           <td>
             {% blocktranslate with code=cart.coupon.code discount=cart.coupon.discount %}
-              "{{ code }}" coupon ({{ discount }}% off)
+            <span class="coupon-details">"{{ code }}" coupon ({{ discount }}% off)</span>
             {% endblocktranslate %}
           </td>
           <td colspan="4"></td>
           <td class="num neg">
-            - ${{ cart.get_discount|floatformat:2 }}
+          - ${{ cart.get_discount|floatformat:2 }}
           </td>
         </tr>
       {% endif %}
+      {% comment %} Shipping info {% endcomment %}
+      {% if cart.get_shipping_cost > 0 %}
+      <tr>
+        <td>{% translate "Shipping" %}</td>
+        <td colspan="4"></td>
+        <td class="num">${{ cart.get_shipping_cost|floatformat:2 }}</td>
+      </tr>
+      {% endif %}
+      {% comment %} Total {% endcomment %}
       <tr class="total">
         <td>{% translate "Total" %}</td>
         <td colspan="4"></td>
@@ -75,7 +86,7 @@
       </tr>
     </tbody>
   </table>
-
+  {% comment %} Recommender {% endcomment %}
   {% if recommended_products %}
   <div class="recommendations cart">
     <h3>{% translate "People who bought this also bought" %}</h3>
@@ -90,13 +101,14 @@
     {% endfor %}
   </div>
 {% endif %}
-
+{% comment %} Coupon code input  {% endcomment %}
   <p>{% translate "Apply a coupon" %}:</p>
   <form action="{% url "coupons:apply" %}" method="post">
     {{ coupon_apply_form }}
     <input type="submit" value="{% translate "Apply" %}">
     {% csrf_token %}
   </form>
+  {% comment %} Shop & Checkout buttons {% endcomment %}
   <p class="text-right">
     <a href="{% url "shop:product_list" %}" class="button light">{% translate "Continue shopping" %}</a>
     <a href="{% url "orders:order_create" %}" class="button">{% translate "Checkout" %}</a>

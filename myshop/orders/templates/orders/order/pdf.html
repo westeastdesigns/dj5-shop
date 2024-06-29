@@ -53,7 +53,14 @@
           </td>
         </tr>
       {% endif %}
-
+      
+      {% if order.shipping_cost %}
+      <tr>
+        <td colspan="3">{% translate "Shipping" %}</td>
+        <td class="num">${{ order.get_shipping_cost|floatformat:2 }}</td>
+      </tr>
+      {% endif %}
+      
       <tr class="total">
         <td colspan="3">{% translate "Total" %}</td>
         <td class="num">${{ order.get_total_cost|floatformat:2 }}</td>

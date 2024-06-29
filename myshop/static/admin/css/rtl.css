@@ -83,7 +83,7 @@ thead th.sorted .text {
 
 .change-list .filtered table {
     border-left: none;
-    border-right: 0px none;
+    border-right: 0 none;
 }
 
 #changelist-filter {
@@ -174,7 +174,7 @@ form .wide ul.errorlist,
 form .wide input + p.help,
 form .wide input + div.help {
     margin-right: 200px;
-    margin-left: 0px;
+    margin-left: 0;
 }
 
 .submit-row {

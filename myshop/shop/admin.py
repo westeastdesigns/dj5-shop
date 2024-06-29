@@ -7,7 +7,7 @@ from .models import Category, Product
 # Registers catalog models on the administration site
 @admin.register(Category)
 class CategoryAdmin(TranslatableAdmin):
-    """CategoryAdmin registers the Category model on the administation site.
+    """CategoryAdmin registers the Category model on the administration site.
 
     Args:
         list_display (list): contains values for category names and slugs.

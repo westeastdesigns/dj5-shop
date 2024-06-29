@@ -31,10 +31,17 @@ def order_create(request):
     if request.method == "POST":
         form = OrderCreateForm(request.POST)
         if form.is_valid():
+            # commit=False allows setting additional fields before saving the order
+            # instance to the database
             order = form.save(commit=False)
             if cart.coupon:
                 order.coupon = cart.coupon
-                order.discount = cart.coupon.discount
+                order.discount = cart.get_discount()
+
+            # Ensure shipping cost is included when creating an order
+            shipping_cost = cart.get_shipping_cost()
+            if shipping_cost > 0:
+                order.shipping_cost = shipping_cost
             order.save()
             for item in cart:
                 OrderItem.objects.create(
@@ -43,10 +50,11 @@ def order_create(request):
                     price=item["price"],
                     quantity=item["quantity"],
                 )
-            # clear the cart
-            cart.clear()
+
             # launch asynchronous task with Celery
             order_created.delay(order.id)
+            # clear the cart
+            cart.clear()
             # set the order in the session
             request.session["order_id"] = order.id
             # redirect for payment

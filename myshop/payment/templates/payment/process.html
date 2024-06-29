@@ -3,6 +3,7 @@
 
 {% block title %}{% translate "Pay your order" %}{% endblock %}
 
+{% comment %} Cart inventory {% endcomment %}
 {% block content %}
   <h1>{% translate "Order summary" %}</h1>
   <table class="cart">
@@ -20,7 +21,8 @@
         <tr class="row{% cycle "1" "2" %}">
           <td>
             <img src="{% if item.product.image %}{{ item.product.image.url }}
-            {% else %}{% static "img/no_image.png" %}{% endif %}">
+            {% else %}{% static "img/no_image.png" %}
+            {% endif %}" alt="this product has no image">
           </td>
           <td>{{ item.product.name }}</td>
           <td class="num">${{ item.price }}</td>
@@ -46,6 +48,15 @@
           <td class="num neg">
             - ${{ order.get_discount|floatformat:2 }}
           </td>
+        </tr>
+      {% endif %}
+      {% if order.get_shipping_cost > 0 %}
+        <tr>
+          <td>{% translate "Shipping" %}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="num">${{ order.get_shipping_cost|floatformat:2 }}</td>
         </tr>
       {% endif %}
       <tr class="total">

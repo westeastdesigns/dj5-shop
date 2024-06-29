@@ -57,7 +57,8 @@ class OrderItemInline(admin.TabularInline):
     and raw_id_fields (list)
 
     Args:
-        admin (TabularInline)
+        model: (:model:`orders.OrderItem`)
+        raw_id_fields: (list)
 
     """
 
@@ -113,9 +114,6 @@ class OrderAdmin(admin.ModelAdmin):
 
     The fields are list_display (list), list_filter (list), and inlines (:class:`orders.OrderItemInline`)
 
-    Args:
-        admin (ModelAdmin)
-
     """
 
     list_display = [
@@ -127,6 +125,7 @@ class OrderAdmin(admin.ModelAdmin):
         "postal_code",
         "city",
         "state",
+        "get_shipping_cost",
         "paid",
         order_payment,
         "created",
@@ -137,3 +136,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ["paid", "created", "updated"]
     inlines = [OrderItemInline]
     actions = [export_to_csv]
+
+    def get_shipping_cost(self, obj):
+        return obj.get_shipping_cost()
+
+    get_shipping_cost.short_description = "Shipping Cost"

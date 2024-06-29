@@ -62,9 +62,9 @@ def payment_process(request):
                 }
             )
 
-        # Add shipping cost to the Stripe checkout session
+        # Add shipping cost to the Stripe checkout session if it's greater than 0
         shipping_cost = order.get_shipping_cost()
-        if shipping_cost:
+        if shipping_cost > 0:
             session_data["line_items"].append(
                 {
                     "price_data": {
